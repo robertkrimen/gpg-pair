@@ -12,19 +12,21 @@ AUTHOR
 Usage: gpg-pair ...
 
     export <identifier0> [identifier1] ... [identifierN]
-    export *                # Export key or keys specified by each <identifier>
-    export                  # Export every key if nothing is specified or '*' is given
-                            # The .tar that is created is printed to STDOUT
-                            # The contents of the .tar are two files: 'public' and 'secret'
+    export *        # Export key or keys specified by each <identifier>
+    export          # Export every key if nothing is specified or '*' is given
+                    # The .tar that is created is printed to STDOUT
+                    # The contents of the .tar are two files: 'public'
+                    # and 'secret'
 
     import <file>           # Import .tar created by export
                             # Read from STDIN if <file> is '-'
 
 For example:
 
-    gpg-pair export                                 # Export all keys (public & secret)
-    gpg-pair export \*                              # Also export all keys (public & secret)
-    gpg-pair export Alice Bob charlie@example.com   # Export Alice, Bob, & Charlies keys
+    gpg-pair export                 # Export all keys (public & secret)
+    gpg-pair export \*              # Also export all keys (public & secret)
+    gpg-pair export Alice Bob /     # Export Alice, Bob, & Charlies keys
+                    charlie@example.com  
 
     gpg-pair import -               # Import from .tar via STDIN
     gpg-pair import                 # Same as above
@@ -35,3 +37,4 @@ For example:
 # A tar with -O capability (files are written to stdout) is required for import
 # You may need to specify a suitable tar with TAR=
 # For example: TAR=gtar gpg-pair import ...
+
