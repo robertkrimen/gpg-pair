@@ -67,7 +67,13 @@ For example:
     gpg-pair import -               # Import from .tar via STDIN
     gpg-pair import                 # Same as above
     gpg-pair import DE4DB33F.tar    # Import from DE4DB33F.tar
-    
+
+---
+
+# A tar with -O capability (files are written to stdout) is required for import
+# You may need to specify a suitable tar with TAR=
+# For example: TAR=gtar gpg-pair import ...
+
 _END_
     ;;
 esac
