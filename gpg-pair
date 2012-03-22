@@ -16,6 +16,10 @@ case $ACTION in
         then
             TARGET=$1
         fi
+        if [[ $TARGET == "*" ]]
+        then
+            TARGET=
+        fi
 
         _TMP=$(mktemp -d .gpg-pair.XXXXXX)
         trap 'rm -rf "$_TMP"' EXIT
@@ -23,23 +27,40 @@ case $ACTION in
         NAME=$(gpg --with-colons --fixed-list-mode --list-keys $TARGET | grep ^sub: | awk -F : '{ print $5 }')
         if [[ -z "$NAME" ]]
         then
-            echo "Error finding keys ($TARGET)"
+            echo "Error finding keys ($TARGET)" >&2
             exit 64
         fi
         NAME=$(echo $NAME | perl -e 'print join "+", map { substr $_, -8 } split m/\s+/, <STDIN>')
-        gpg --export $TARGET > $_TMP/public
-        gpg --export-secret-key $TARGET > $_TMP/secret
-        tar cf "$NAME.tar" -C $_TMP .
+        gpg --armor --export $TARGET > $_TMP/public
+        gpg --armor --export-secret-key $TARGET > $_TMP/secret
+        tar -cf "$NAME.tar" -C $_TMP .
         echo "$NAME.tar"
     ;;
     import)
+        TARGET=
+        if [[ $# -ne 0 ]]
+        then
+            TARGET=$1
+        else
+            TARGET=-
+        fi
+        tar -xOf $TARGET | gpg
     ;;
     *)
+        if [[ -n "$ACTION" ]]
+        then
+            echo "Unknown command: $ACTION" >&2
+        fi
         cat <<_END_
 Usage: gpg-pair ...
 
-    export
-    import
+    export <identifier|*>   # Export key or keys specified by <identifier>
+                            # Export every key if nothing is specified or '*' is given
+                            # The .tar that is created is printed to STDOUT
+                            # The contents of the .tar are two files: 'public' and 'secret'
+
+    import <file>           # Import .tar created by export
+                            # Read from STDIN if <file> is '-'
     
 _END_
     ;;
