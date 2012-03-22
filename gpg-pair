@@ -9,6 +9,12 @@ then
     shift
 fi
 
+TAR=$TAR
+if [[ -z "$TAR" ]]
+then
+    TAR=tar
+fi
+
 case $ACTION in
     export)
         TARGET=
@@ -33,7 +39,7 @@ case $ACTION in
         NAME=$(echo $NAME | perl -e 'print join "+", map { substr $_, -8 } split m/\s+/, <STDIN>')
         gpg --armor --export $TARGET > $_TMP/public
         gpg --armor --export-secret-key $TARGET > $_TMP/secret
-        tar -cf "$NAME.tar" -C $_TMP .
+        $TAR -cf "$NAME.tar" -C $_TMP .
         echo "$NAME.tar"
     ;;
     import)
@@ -44,7 +50,7 @@ case $ACTION in
         else
             TARGET=-
         fi
-        tar -xOf $TARGET | gpg
+        $TAR -xOf $TARGET | gpg --import
     ;;
     *)
         if [[ -n "$ACTION" ]]
