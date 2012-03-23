@@ -2,7 +2,7 @@ NAME
     gpg-pair
 
 DESCRIPTION
-    Export or import pairs of GnuPG keys at a time
+    Export or import GnuPG keys (public & secret) by the pair (at the same time)
 
 AUTHOR
     Robert Krimen <robertkrimen@gmail.com>
@@ -14,21 +14,20 @@ Usage: gpg-pair ...
     export <identifier0> [identifier1] ... [identifierN]
     export *        # Export key or keys specified by each <identifier>
     export          # Export every key if nothing is specified or '*' is given
-                    # The .tar that is created is printed to STDOUT
-                    # The contents of the .tar are two files: 'public'
-                    # and 'secret'
+                    # The name of the .tar that is created
+                    # is printed to STDOUT
 
-    import <file>           # Import .tar created by export
+    import <file>           # Import a .tar created by export
                             # Read from STDIN if <file> is '-'
 
 For example:
 
     gpg-pair export                 # Export all keys (public & secret)
     gpg-pair export \*              # Also export all keys (public & secret)
-    gpg-pair export Alice Bob /     # Export Alice, Bob, & Charlies keys
+    gpg-pair export Alice Bob /     # Export Alice, Bob, & Charlie keys
                     charlie@example.com  
 
-    gpg-pair import -               # Import from .tar via STDIN
+    gpg-pair import -               # Import from a .tar via STDIN
     gpg-pair import                 # Same as above
     gpg-pair import DE4DB33F.tar    # Import from DE4DB33F.tar
 
@@ -37,4 +36,3 @@ For example:
 # A tar with -O capability (files are written to stdout) is required for import
 # You may need to specify a suitable tar with TAR=
 # For example: TAR=gtar gpg-pair import ...
-
