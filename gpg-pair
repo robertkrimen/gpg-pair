@@ -9,7 +9,15 @@ then
     shift
 fi
 
-TAR=${TAR:-tar}
+__TAR__=
+if command -v gtar 1>/dev/null 2>&1
+then
+    __TAR__=gtar
+else
+    __TAR__=tar
+fi
+
+TAR=${TAR:-$__TAR__}
 GPG=${GPG:-gpg}
 
 case $ACTION in
