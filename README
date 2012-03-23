@@ -14,11 +14,13 @@ Usage: gpg-pair ...
     export <identifier0> [identifier1] ... [identifierN]
     export *        # Export key or keys specified by each <identifier>
     export          # Export every key if nothing is specified or '*' is given
-                    # The name of the .tar that is created
-                    # is printed to STDOUT
+                    #
+                    # Export is via the creation of a new .tar
+                    # with the two files 'public' and 'secret'
+                    # The name of the new .tar # is printed to STDOUT
 
-    import <file>           # Import a .tar created by export
-                            # Read from STDIN if <file> is '-'
+    import <file>   # Import a .tar created by export
+                    # Read the .tar from STDIN if <file> is '-'
 
 For example:
 
@@ -34,5 +36,6 @@ For example:
 ---
 
 # A tar with -O capability (files are written to stdout) is required for import
-# You may need to specify a suitable tar with TAR=
+# You may need to specify a suitable tar (like GNU tar) with TAR=
 # For example: TAR=gtar gpg-pair import ...
+# gpg-pair will look for and automatically use gtar (if detected)
