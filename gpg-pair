@@ -84,9 +84,6 @@ For example:
 
 ---
 
-# A tar with -O capability (files are written to stdout) is required for import
-# You may need to specify a suitable tar (like GNU tar) with TAR=
-# For example: TAR=gtar gpg-pair import ...
 # gpg-pair will look for and automatically use gtar (if detected)
 
 _END_
