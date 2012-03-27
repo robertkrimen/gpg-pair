@@ -46,8 +46,11 @@ case $ACTION in
         echo "$NAME.tar"
     ;;
     import)
+        _TMP=$(mktemp -d .gpg-pair.XXXXXX)
+        trap 'rm -rf "$_TMP"' EXIT
         FILE=${1:--}
-        $TAR -xOf $FILE | $GPG --import
+        $TAR -xf "$FILE" -C "$_TMP"
+        gpg --import $_TMP/*
     ;;
     *)
         if [[ -n "$ACTION" ]]
