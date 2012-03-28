@@ -28,6 +28,15 @@ case $ACTION in
         if [[ $# -eq 1 && $1 == "*" ]]
         then
             TARGET=
+        elif [[ $# -eq 0 ]]
+        then
+            read -p "Export all public/secret key pairs? (y/N) " -s -n 1 -r
+            if [[ ! $REPLY =~ ^[Yy]$ ]]
+            then
+                echo "Cancel"
+                exit
+            fi
+            echo
         else
             TARGET=$@
         fi
