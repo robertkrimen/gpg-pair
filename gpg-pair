@@ -75,9 +75,9 @@ Usage: gpg-pair ...
     export *        # Export key or keys specified by each <identifier>
     export          # Export every key if nothing is specified or '*' is given
                     #
-                    # Export is via the creation of a new .tar
-                    # with the two files 'public' and 'secret'
-                    # The name of the new .tar # is printed to STDOUT
+                    # Export is via the creation of a new .tar with
+                    # the two files 'public' and 'secret'
+                    # The name of the new .tar is printed to STDOUT
 
     import <file>   # Import a .tar created by export
                     # Read the .tar from STDIN if <file> is '-'
@@ -95,7 +95,7 @@ For example:
 
 ---
 
-# gpg-pair will look for and automatically use gtar (if detected)
+# gpg-pair will favor gtar (GNU tar) if detected
 
 _END_
     ;;
