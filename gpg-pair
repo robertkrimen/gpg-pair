@@ -2,6 +2,8 @@
 
 set -e -u
 
+umask 0077
+
 ACTION=
 if [[ $# -ne 0 ]]
 then
